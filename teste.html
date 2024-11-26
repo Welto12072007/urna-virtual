@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna Eletrônica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f9f9f9;
+        }
+        .urna {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #display {
+            margin: 20px 0;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            background-color: #eaeaea;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin: 5px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="urna">
+        <h1>Urna Eletrônica</h1>
+        <div id="display">Digite os números do candidato</div>
+        <div>
+            <button onclick="addNumber(1)">1</button>
+            <button onclick="addNumber(2)">2</button>
+            <button onclick="addNumber(3)">3</button>
+            <button onclick="addNumber(4)">4</button>
+            <button onclick="addNumber(5)">5</button>
+            <button onclick="addNumber(6)">6</button>
+            <button onclick="addNumber(7)">7</button>
+            <button onclick="addNumber(8)">8</button>
+            <button onclick="addNumber(9)">9</button>
+            <button onclick="addNumber(0)">0</button>
+        </div>
+        <button onclick="confirmVote()" id="confirm-btn" disabled>Confirmar</button>
+    </div>
+    <script>
+        const candidatos = {
+            12: "Candidato A",
+            34: "Candidato B",
+            56: "Candidato C",
+            78: "Candidato D"
+        };
+
+        let digits = "";
+
+        function addNumber(num) {
+            if (digits.length < 2) {
+                digits += num;
+                updateDisplay();
+            }
+            if (digits.length === 2) {
+                document.getElementById("confirm-btn").disabled = false;
+            }
+        }
+
+        function updateDisplay() {
+            const display = document.getElementById("display");
+            display.textContent = digits || "Digite os números do candidato";
+        }
+
+        function confirmVote() {
+            const display = document.getElementById("display");
+            if (candidatos[digits]) {
+                display.textContent = `Voto confirmado: ${candidatos[digits]}`;
+            } else {
+                display.textContent = "Número inválido!";
+            }
+            reset();
+        }
+
+        function reset() {
+            digits = "";
+            document.getElementById("confirm-btn").disabled = true;
+            setTimeout(updateDisplay, 2000);
+        }
+    </script>
+</body>
+</html>

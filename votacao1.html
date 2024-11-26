@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urna Eletrônica</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="urna">
+        <div class="container-textos">
+            <h1>Urna Eletrônica</h1>
+            <p>VOTE PARA PRESIDENTE</p>
+        </div>
+        <div class="container-urna">    
+            <div class="container-display">
+                <div id="display">Digite os números do candidato</div>
+            </div>
+            <div class="button-grid">
+                <button onclick="addNumber(1)">1</button>
+                <button onclick="addNumber(2)">2</button>
+                <button onclick="addNumber(3)">3</button>
+                <button onclick="addNumber(4)">4</button>
+                <button onclick="addNumber(5)">5</button>
+                <button onclick="addNumber(6)">6</button>
+                <button onclick="addNumber(7)">7</button>
+                <button onclick="addNumber(8)">8</button>
+                <button onclick="addNumber(9)">9</button>
+                <button onclick="addNumber(0)">0</button>
+            </div>
+        </div>
+        <div class="container-especial">
+
+            <button onclick="confirmVote()" id="confirm-btn" disabled>Confirm</button>
+            <button class="special" onclick="voteBlank()">Branco</button>
+            <button class="help" onclick= "window.location.href = 'candidatos1.html'">Ajuda</button>
+            <button class="avanca" onclick="window.location.href = 'votacao2.html'">Avançar</button>
+        </div>
+
+    </div>
+    <script>
+               const candidatos = {
+            43: "Andriel",
+            86: "Wellington",
+            69: "Davi",
+            17: "Heitor",
+            51: "Pietro"    
+        };
+
+        let digits = "";
+
+        function addNumber(num) {
+            if (digits.length < 2) {
+                digits += num;
+                updateDisplay();
+            }
+            if (digits.length === 2) {
+                document.getElementById("confirm-btn").disabled = false;
+            }
+        }
+
+        function updateDisplay() {
+            const display = document.getElementById("display");
+            display.textContent = digits || "Digite os números do candidato";
+        }
+
+        function confirmVote() {
+            const display = document.getElementById("display");
+            if (candidatos[digits]) {
+                display.textContent = `Voto confirmado: ${candidatos[digits]}`;
+            } else {
+                display.textContent = "Número inválido!";
+            }
+            reset();
+        }
+
+        function reset() {
+            digits = "";
+            document.getElementById("confirm-btn").disabled = true;
+            setTimeout(updateDisplay, 2000);
+
+        }
+        function voteBlank() {
+            const display = document.getElementById("display");
+            display.textContent = "Voto em Branco confirmado!";
+        }
+    </script>
+</body>
+</html>
